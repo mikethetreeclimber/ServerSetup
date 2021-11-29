@@ -20,8 +20,6 @@ echo "
                                     (_/
 "
 sleep 2
- 
-clear
 echo " 
                                 ''~``
                                ( o o )
@@ -44,12 +42,12 @@ fi
 
 # Update
 echo ">>> Updating our list of packages ..."
-apt-get update > /dev/null
-apt-get upgrade -y > /dev/null
+apt-get update 
+apt-get upgrade -y 
 
 echo ">>> Installing Base Items ( curl, wget, certbot, expect ) ..."
 # Install base items
-apt-get install -y curl wget expect certbot > /dev/null
+apt-get install -y curl wget expect certbot 
 
 sleep 2
 clear
@@ -108,9 +106,9 @@ sleep 0.5
 
         # Install Apache and the Apache certbot plugin using Ubuntu’s package manager 
         apt-get update > /dev/null
-        systemctl stop apache2 -f > /dev/null
+        systemctl stop apache2 -f
         sleep 4
-        apt install apache2 python3-certbot-apache -f -y > /dev/null
+        apt install apache2 python3-certbot-apache -f -y
 
         # disable the default website that comes installed with Apache.
         a2dissite 000-default
@@ -253,7 +251,7 @@ echo "
 
         # Install MySQL package
         apt-get update > /dev/null
-         apt install mariadb-server-10.5 mariadb-client-10.5 -y > /dev/null
+         apt install mariadb-server-10.5 mariadb-client-10.5 -y
 
         # Securing MySQL
        echo "
