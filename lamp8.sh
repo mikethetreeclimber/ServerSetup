@@ -1,5 +1,5 @@
 #!/bin/bash
-clear
+
 echo "                                                        
 Author: 	
 Creation Date:  21/11-29
@@ -42,7 +42,6 @@ echo ">>> Installing Base Items ( curl, wget, certbot, expect ) ..."
 # Install base items
 apt-get install -y curl wget expect certbot 
 
-clear
  
 echo "
                                 ''~``
@@ -60,7 +59,7 @@ echo
 read -p "- Would you like to install LAMP stack? (y/n): " install_lamp < /dev/tty
 if [[ $install_lamp = 'y' ]]; then
 
-clear
+
 echo "
 
 ██╗      █████╗ ███╗   ███╗██████╗     ███████╗████████╗ █████╗  ██████╗██╗  ██╗
@@ -100,7 +99,7 @@ echo
 
     # allow port 80 traffic 
     ufw allow 'Apache'
-    clear
+    
     echo "
 
 ██╗      █████╗ ███╗   ███╗██████╗     ███████╗████████╗ █████╗  ██████╗██╗  ██╗
@@ -138,7 +137,7 @@ echo
         sed -i 's@^post_max_size.*@post_max_size = 100M@' /etc/php/8.0/cli/php.ini
         sed -i 's@^upload_max_filesize.*@upload_max_filesize = 50M@' /etc/php/8.0/cli/php.ini
 
-clear
+
     echo "
 
 ██╗      █████╗ ███╗   ███╗██████╗     ███████╗████████╗ █████╗  ██████╗██╗  ██╗
@@ -169,7 +168,7 @@ echo "
 systemctl restart php8.0-fpm.service
  systemctl stop apache2
  systemctl start apache2
-clear
+
 echo "
 
 ██╗      █████╗ ███╗   ███╗██████╗     ███████╗████████╗ █████╗  ██████╗██╗  ██╗
@@ -244,7 +243,7 @@ echo "
         expect eof
         ")
 
-clear
+
 echo "
 
 ██╗      █████╗ ███╗   ███╗██████╗     ███████╗████████╗ █████╗  ██████╗██╗  ██╗
@@ -258,7 +257,7 @@ echo "
 echo
 read -p "- Would you like to create virtual host(s) for your site(s) ? (y/n): " website_creation < /dev/tty
 if [[ $website_creation = 'y' ]]; then
-clear
+
 echo "
 
 ██╗      █████╗ ███╗   ███╗██████╗     ███████╗████████╗ █████╗  ██████╗██╗  ██╗
@@ -413,7 +412,7 @@ apt-get autoremove -y > /dev/null
 
 
 
-clear
+
 
 echo "
                                 ''~``
@@ -452,7 +451,7 @@ echo "
                                     (_/
     "
 sleep 3
-clear
+
 
 exit 
 fi
