@@ -287,8 +287,8 @@ echo "
             # Assign ownership of the directory with the $USER environment variable, which will reference your current system user
             chown -R $USER:$USER /var/www/html/"$line"
 
-            touch /var/www/html/"$line"/public/index.html
-            touch /var/www/html/"$line"/public/info.php
+            touch /var/www/html/"$line"/index.html
+            touch /var/www/html/"$line"/info.php
 
             # Create test files
             echo '<html>
@@ -299,9 +299,9 @@ echo "
     <h1>Hello World!</h1>
     <p>Welcome to <strong>'$line'</strong>.</p>
 </body>
-</html>' > /var/www/html/"$line"/public/index.html
+</html>' > /var/www/html/"$line"/index.html
             echo '<?php
-phpinfo();' > /var/www/html/"$line"/public/info.php
+phpinfo();' > /var/www/html/"$line"/info.php
 
             # Create virtual host
             echo '<VirtualHost *:80>
