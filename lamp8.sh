@@ -19,7 +19,6 @@ echo "
                               \_)    ) /
                                     (_/
 "
-sleep 2
 echo " 
                                 ''~``
                                ( o o )
@@ -34,12 +33,6 @@ echo "
                                     (_/
 "
 
-if [[ $EUID -ne 0 ]]
-  then
-    echo "This script must be run as root."
-    exit
-fi
-
 # Update
 echo ">>> Updating our list of packages ..."
 apt-get update 
@@ -49,7 +42,6 @@ echo ">>> Installing Base Items ( curl, wget, certbot, expect ) ..."
 # Install base items
 apt-get install -y curl wget expect certbot 
 
-sleep 2
 clear
  
 echo "
@@ -64,9 +56,6 @@ echo "
                               \_)    ) /
                                     (_/
 "
-sleep 2
-echo
-echo
 echo
 read -p "- Would you like to install LAMP stack? (y/n): " install_lamp < /dev/tty
 if [[ $install_lamp = 'y' ]]; then
@@ -87,10 +76,6 @@ echo ">>> LAMP Stack Installation"
 echo "==============================================="
 echo
 
-sleep 0.5
-
-    if ! whereis apache2 | grep -q "/"; then
-
        echo "
                                 ''~``
                                ( o o )
@@ -105,7 +90,7 @@ sleep 0.5
 "
 
         # Install Apache and the Apache certbot plugin using Ubuntu’s package manager 
-        apt-get update > /dev/null
+        apt-get update
         systemctl stop apache2 -f
         sleep 4
         apt install apache2 python3-certbot-apache -f -y
@@ -113,16 +98,8 @@ sleep 0.5
         # disable the default website that comes installed with Apache.
         a2dissite 000-default
 
-    else
-        echo ">>> Apache Already Installed"
-        echo
-    fi
-
     # allow port 80 traffic 
-    ufw allow 'Apache' > /dev/null
-
-
-    sleep 2
+    ufw allow 'Apache'
     clear
     echo "
 
@@ -139,10 +116,6 @@ echo ">>> LAMP Stack Installation"
 echo "==============================================="
 echo
 
-sleep 0.5
-
-        if ! whereis php | grep -q "/"; then
-
       echo "
                                 ''~``
                                ( o o )
@@ -158,23 +131,13 @@ sleep 0.5
 
         apt-get update > /dev/null
         apt-get install -y php8.0-cli php8.0-fpm php8.0-bcmath php8.0-bz2 php8.0-curl php8.0-enchant php8.0-gd
-        apt-get install php8.0-imagick php8.0-intl php8.0-mbstring php8.0-mcrypt php8.0-memcached 
-        apt-get install  php8.0-mysql php8.0-readline php8.0-redis php8.0-sqlite3
-        apt-get install php8.0-xml php8.0-xsl php8.0-zip
+        apt-get install -y php8.0-imagick php8.0-intl php8.0-mbstring php8.0-mcrypt php8.0-memcached 
+        apt-get install -y php8.0-mysql php8.0-readline php8.0-redis php8.0-sqlite3
+        apt-get install -y php8.0-xml php8.0-xsl php8.0-zip
 
         sed -i 's@^post_max_size.*@post_max_size = 100M@' /etc/php/8.0/cli/php.ini
         sed -i 's@^upload_max_filesize.*@upload_max_filesize = 50M@' /etc/php/8.0/cli/php.ini
 
-    else
-
-        echo
-        echo ">>> PHP Already Installed"
-        echo
-
-    fi
- 
-
-sleep 2
 clear
     echo "
 
@@ -190,9 +153,6 @@ echo "==============================================="
 echo ">>> LAMP Stack Installation"
 echo "==============================================="
 echo
-
-sleep 0.5
- 
 echo "
                                 ''~``
                                ( o o )
@@ -208,9 +168,7 @@ echo "
 
 systemctl restart php8.0-fpm.service
  systemctl stop apache2
-sleep 0.5
  systemctl start apache2
-sleep 0.5
 clear
 echo "
 
@@ -227,11 +185,6 @@ echo ">>> LAMP Stack Installation"
 echo "==============================================="
 echo
 
-sleep 0.5
-
-    if ! whereis mysql | grep -q "/"; then
-
-        
 echo "
                                 ''~``
                                ( o o )
@@ -250,7 +203,7 @@ echo "
         debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
 
         # Install MySQL package
-        apt-get update > /dev/null
+        apt-get update
          apt install mariadb-server-10.5 mariadb-client-10.5 -y
 
         # Securing MySQL
@@ -291,16 +244,6 @@ echo "
         expect eof
         ")
 
-        echo "$SECURE_MYSQL"
-
-    else
-
-        echo
-        echo ">>> MySQL Already Installed"
-        echo
-
-    fi
-
 clear
 echo "
 
@@ -312,8 +255,6 @@ echo "
 ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝         ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
                                                                                 
 "
-echo
-
 echo
 read -p "- Would you like to create virtual host(s) for your site(s) ? (y/n): " website_creation < /dev/tty
 if [[ $website_creation = 'y' ]]; then
@@ -345,6 +286,9 @@ echo "
 
             # Assign ownership of the directory with the $USER environment variable, which will reference your current system user
             chown -R $USER:$USER /var/www/html/"$line"
+
+            touch /var/www/html/"$line"/public/index.html
+            touch /var/www/html/"$line"/public/info.php
 
             # Create test files
             echo '<html>
@@ -469,7 +413,6 @@ apt-get autoremove -y > /dev/null
 
 
 
-sleep 2
 clear
 
 echo "
@@ -487,9 +430,7 @@ echo "
                               \_)    ) /
                                     (_/
 "
- 
-sleep 5
-clear
+ sleep 1
  
  
 echo "
@@ -513,6 +454,5 @@ echo "
 sleep 3
 clear
 
+exit 
 fi
-
-exit 0
